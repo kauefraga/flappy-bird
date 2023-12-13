@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://cpp3p2afwjmji"]
+
+[ext_resource type="Script" path="res://scripts/earth.gd" id="1_d7cig"]
+[ext_resource type="Texture2D" uid="uid://b42tudv28maia" path="res://art/background/Background1.png" id="2_f5fii"]
+[ext_resource type="PackedScene" uid="uid://d0o6g6asli0dc" path="res://scenes/pipe.tscn" id="2_smek6"]
+[ext_resource type="PackedScene" uid="uid://delwj03ckh1sd" path="res://scenes/flappy-bird.tscn" id="3_ftq7v"]
+[ext_resource type="PackedScene" uid="uid://cggk1wlykcivf" path="res://scenes/hud.tscn" id="4_ydhy0"]
+[ext_resource type="PackedScene" uid="uid://bcr6e5ceikyhf" path="res://scenes/discord-manager.tscn" id="6_qpmhu"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_d7cig")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_f5fii")
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="Pipes" type="Node" parent="."]
+
+[node name="Pipe" parent="Pipes" instance=ExtResource("2_smek6")]
+position = Vector2(449, 586)
+
+[node name="Pipe2" parent="Pipes" instance=ExtResource("2_smek6")]
+position = Vector2(453, 138)
+
+[node name="Pipe3" parent="Pipes" instance=ExtResource("2_smek6")]
+position = Vector2(686, 208)
+
+[node name="Pipe4" parent="Pipes" instance=ExtResource("2_smek6")]
+position = Vector2(686, 623)
+
+[node name="FlappyBird" parent="." instance=ExtResource("3_ftq7v")]
+
+[node name="HUD" parent="." instance=ExtResource("4_ydhy0")]
+
+[node name="DiscordManager" parent="." instance=ExtResource("6_qpmhu")]
+
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="hit" from="FlappyBird" to="." method="game_over"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

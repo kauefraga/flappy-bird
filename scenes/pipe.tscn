@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0o6g6asli0dc"]
+
+[ext_resource type="Texture2D" uid="uid://cl08mkvcbec0s" path="res://art/tiles/Style 1/PipeStyle1.png" id="1_wunt8"]
+[ext_resource type="Script" path="res://scripts/pipe.gd" id="1_xr7tj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qx2hp"]
+size = Vector2(62, 266)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k01gk"]
+atlas = ExtResource("1_wunt8")
+region = Rect2(0, 0, 32, 80)
+
+[node name="Pipe" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_xr7tj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qx2hp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 3.3375)
+texture = SubResource("AtlasTexture_k01gk")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
